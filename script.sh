@@ -35,7 +35,7 @@ function dropChange(){
 	# Станции ПТК Teleperm
 		3) drops=("a03spa" "a03spb" "a03p1a" "a03p1b" "a03ot1" "a03ot2" "a03ot3" "a03ot4" "a03ot5" "a03ot6" "a03ot7" "mxa03ot1" "mxa03ot2" "mxa03ot3" "mxa03ot4" "mxa03ot7" "Выход");;
 	# Станции смешанных ПТК
-		4) drops=("a03spa" "a04spb" "a04p1a" "a04p1b" "a04ot1" "a04ot2" "a04ot3" "a04ot4" "mxa04ot1" "mxa04ot2" "mxa04ot3" "DROP200" "DROP201" "DROP210" "DROP211" "DROP160" "Выход");;
+		4) drops=("a03spa" "a04spb" "a04p1a" "a04p1b" "a04ot1" "a04ot2" "a04ot3" "a04ot4" "a04ot5" "mxa04ot1" "mxa04ot2" "mxa04ot3" "DROP200" "DROP201" "DROP210" "DROP211" "DROP160" "Выход");;
 	# Станции, где нет ПТК
 		*) echo "Нет станций на данном блоке"
 			blockChange "create" # Возврат к выбору блоков 
