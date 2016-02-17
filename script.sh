@@ -23,8 +23,8 @@ function mainChange(){
 #Функция выбора станции
 function dropChange(){
 	# Проверяем, есть ли папка для блока, если нет - создаем ее
-	if [ ! -d "$block" ] ; then
-		mkdir $block
+	if [ ! -d "$unit_path" ] ; then
+		mkdir $unit_path
 	fi
 	# Заголовок вывода
 	PS3='Выберите станцию: '
@@ -52,6 +52,7 @@ function dropChange(){
 }
 
 function blockChange(){
+	unit_path="/media/backup-user/7452565952562062/"
 	# Заголовок вывода
 	PS3='Выберите блок: '
 	# Список блоков
@@ -61,7 +62,7 @@ function blockChange(){
 		case $block in 
 		"Блок 1")
 			# Прописываем папку для бекапа
-			block="/block1_backup/"
+			unit_path+="unit1_backup/"
 			case $1 in 
 				"create") dropChange 1;; # Если создаем копию, то выбираем станцию
 				"restore") 
@@ -86,7 +87,7 @@ function blockChange(){
 					
 		"Блок 2")
 			# Прописываем папку для бекапа
-			block="/block2_backup/"
+			unit_path+="unit2_backup/"
 			case $1 in 
 				"create") dropChange 2;; # Если создаем копию, то выбираем станцию
 				"restore")
@@ -110,7 +111,7 @@ function blockChange(){
 			;;
 		"Блок 3")
 			# Прописываем папку для бекапа
-			block="/block3_backup/"
+			unit_path+="unit3_backup/"
 			case $1 in 
 				"create") dropChange 3;; # Если создаем копию, то выбираем станцию
 				"restore")
@@ -134,7 +135,7 @@ function blockChange(){
 			;;
 		"Блок 4")
 			# Прописываем папку для бекапа
-			block="/block4_backup/"
+			unit_path+="unit4_backup/"
 			case $1 in 
 				"create") dropChange 4;; # Если создаем копию, то выбираем станцию
 				"restore")
@@ -158,7 +159,7 @@ function blockChange(){
 			;;
 		"Блок 5")
 			# Прописываем папку для бекапа
-			block="/block5_backup/"
+			unit_path+="unit5_backup/"
 			case $1 in 
 				"create") dropChange 5;; # Если создаем копию, то выбираем станцию
 				"restore")
@@ -182,7 +183,7 @@ function blockChange(){
 			;;
 		"Блок 6")
 			# Прописываем папку для бекапа
-			block="/block6_backup/"
+			unit_path+="unit6_backup/"
 			case $1 in 
 				"create") dropChange 6;; # Если создаем копию, то выбираем станцию
 				"restore")
@@ -206,7 +207,7 @@ function blockChange(){
 			;;
 		"Блок 7")
 			# Прописываем папку для бекапа
-			block="/block7_backup/"
+			unit_path+="unit7_backup/"
 			case $1 in 
 				"create") dropChange 7;; # Если создаем копию, то выбираем станцию
 				"restore")
@@ -230,7 +231,7 @@ function blockChange(){
 			;;
 		"Блок 8")
 			# Прописываем папку для бекапа
-			block="/block8_backup/"
+			unit_path+="unit8_backup/"
 			case $1 in 
 				"create") dropChange 8;; # Если создаем копию, то выбираем станцию
 				"restore")
@@ -265,25 +266,28 @@ function driveChange() {
 	# Заголовок выбора
 	PS3='Выберите диск: '
 	# Создаем пустой массив дисков
-	drives=()
+	IFS=$'\n'
+	drives=($(lsblk -Sno NAME,MODEL,VENDOR,SIZE,TYPE))
+	
 	# Делаем запрос дисков в системе
-	store=$(hal-find-by-capability --capability "storage")
-	for s in $store 
-	do
+	#store=$(hal-find-by-capability --capability "storage")
+	#for s in $store 
+	#do
 		# Название диска 
-		product=$(hal-get-property --udi ${s} --key info.product)
+	#	product=$(hal-get-property --udi ${s} --key info.product)
 		# Размер диска
-		size=$(hal-get-property --udi ${s} --key storage.size)
+	#	size=$(hal-get-property --udi ${s} --key storage.size)
 		# Тип диска
-		type=$(hal-get-property --udi ${s} --key storage.drive_type)
+	#	type=$(hal-get-property --udi ${s} --key storage.drive_type)
 		# Где расположен в системе
-		device=$(hal-get-property --udi ${s} --key block.device)
+	#	device=$(hal-get-property --udi ${s} --key block.device)
 		# Точка монтрования диска
-		mountpoint=$(awk -vdev="$device" '$0~dev{print $2}' /etc/mtab)
+	#	mountpoint=$(awk -vdev="$device" '$0~dev{print $2}' /etc/mtab)
 		# Заносим все данные в массив
-		drives+=("${device} ${product} ${size} ${type} ${mountpoint[@]}")
-	done
+	#	drives+=("${device} ${product} ${size} ${type} ${mountpoint[@]}")
+	#done
 	drives+=("Выход")
+	IFS=$' '
 	# Выводим список дисков
 	select drive in "${drives[@]}"
 	do
@@ -311,7 +315,7 @@ function driveChange() {
 							do
 									case $yes in
 										"Да") # Создаем образ
-												dd if=${disk[0]} | gzip -c > ${block}${drop}_${date}:${password}.gz
+												dd if=/dev/${disk[0]} | pv | gzip -c > ${unit_path}${drop}_${date}:${password}.gz
 												echo "Процесс завершен"
 												mainChange # Возвращаемся в главное меню
 												;;
@@ -331,7 +335,7 @@ function driveChange() {
 							do
 									case $yes in
 										"Да") # Распаковываем образ на диск
-												gunzip -c ${backupFile} | dd of=${disk[0]}
+												gunzip -c ${backupFile} | pv | dd of=${disk[0]}
 												echo "Процесс завершен"
 												mainChange # Возвращаемся в главное меню
 												;;
