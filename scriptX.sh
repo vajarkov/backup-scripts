@@ -21,8 +21,8 @@ function mainChange(){
 # Функция выбора станции 
 function dropChange(){
 	# Проверяем, есть ли папка для блока, если нет - создаем ее
-	if [ ! -d "$block" ] ; then
-		mkdir $block
+	if [ ! -d "$unit_path" ] ; then
+		mkdir $unit_path
 	fi
 			
 	case $1 in
@@ -57,6 +57,8 @@ function dropChange(){
 
 # Функция выбора блока
 function blockChange(){
+	# Устанавливаем начальный путь для диска резервных копий
+	unit_path="/media/backup-user/7452565952562062/"
 	# Список блоков
 	blocks=$(zenity --list "Блок 1" "Блок 2" "Блок 3" "Блок 4" "Блок 5" "Блок 6" "Блок 7" "Блок 8" --column="Выберите блок" --title="Резервная копия")
  	# Если выбрали "Отмена" или закрыли окно - выходим из приложения
@@ -66,14 +68,14 @@ function blockChange(){
 	case "$blocks" in 
 		"Блок 1")
 			# Прописываем папку для бекапа
-			block="/block1_backup/"
+			unit_path+="unit1_backup/"
 			case $1 in 
 				"create")
 					dropChange 1 # Если создаем копию, то выбираем станцию
 					;;
 				"restore")
 					# Для восстановления выбираем файл образа из папки
-					backupFile=$(zenity --file-selection --filename="$block" --title="Выберите файл образа")
+					backupFile=$(zenity --file-selection --filename="$unit_path" --title="Выберите файл образа")
 					# Если выбрали "Отмена" или закрыли окно - выходим из приложения
 					if [ $? -eq 1 ] ; then 
  						exit
@@ -86,14 +88,14 @@ function blockChange(){
 		;;
 		"Блок 2")
 			# Прописываем папку для бекапа
-			block="/block2_backup/"
+			unit_path+="unit2_backup/"
 			case $1 in 
 				"create")
 					dropChange 2 # Если создаем копию, то выбираем станцию
 					;;
 				"restore")
 					# Для восстановления выбираем файл образа из папки
-					backupFile=$(zenity --file-selection --filename="$block" --title="Выберите файл образа")
+					backupFile=$(zenity --file-selection --filename="$unit_path" --title="Выберите файл образа")
 					# Если выбрали "Отмена" или закрыли окно - выходим из приложения
 					if [ $? -eq 1 ] ; then 
  						exit
@@ -106,14 +108,14 @@ function blockChange(){
 		;;
 		"Блок 3")
 			# Прописываем папку для бекапа
-			block="/block3_backup/"
+			unit_path+="unit3_backup/"
 			case $1 in 
 				"create")
 					dropChange 3 # Если создаем копию, то выбираем станцию
 					;;
 				"restore")
 					# Для восстановления выбираем файл образа из папки
-					backupFile=$(zenity --file-selection --filename="$block" --title="Выберите файл образа")
+					backupFile=$(zenity --file-selection --filename="$unit_path" --title="Выберите файл образа")
 					# Если выбрали "Отмена" или закрыли окно - выходим из приложения
 					if [ $? -eq 1 ] ; then 
  						exit
@@ -126,14 +128,14 @@ function blockChange(){
 		;;
 		"Блок 4")
 			# Прописываем папку для бекапа
-			block="/block4_backup/"
+			unit_path+="/unit4_backup/"
 			case $1 in 
 				"create")
 					dropChange 4 # Если создаем копию, то выбираем станцию
 					;;
 				"restore")
 					# Для восстановления выбираем файл образа из папки
-					backupFile=$(zenity --file-selection --filename="$block" --title="Выберите файл образа")
+					backupFile=$(zenity --file-selection --filename="$unit_path" --title="Выберите файл образа")
 					# Если выбрали "Отмена" или закрыли окно - выходим из приложения
 					if [ $? -eq 1 ] ; then 
  						exit
@@ -146,14 +148,14 @@ function blockChange(){
 		;;
 		"Блок 5")
 			# Прописываем папку для бекапа
-			block="/block5_backup/"
+			unit_path+="/unit5_backup/"
 			case $1 in 
 				"create")
 					dropChange 5 # Если создаем копию, то выбираем станцию
 					;;
 				"restore")
 					# Для восстановления выбираем файл образа из папки
-					backupFile=$(zenity --file-selection --filename="$block" --title="Выберите файл образа")
+					backupFile=$(zenity --file-selection --filename="$unit_path" --title="Выберите файл образа")
 					# Если выбрали "Отмена" или закрыли окно - выходим из приложения
 					if [ $? -eq 1 ] ; then 
  						exit
@@ -166,14 +168,14 @@ function blockChange(){
 		;;
 		"Блок 6")	
 			# Прописываем папку для бекапа
-			block="/block6_backup/"
+			unit_path+="/unit6_backup/"
 			case $1 in 
 				"create")
 					dropChange 6 # Если создаем копию, то выбираем станцию
 					;;
 				"restore")
 					# Для восстановления выбираем файл образа из папки
-					backupFile=$(zenity --file-selection --filename="$block" --title="Выберите файл образа")
+					backupFile=$(zenity --file-selection --filename="$unit_path" --title="Выберите файл образа")
 					# Если выбрали "Отмена" или закрыли окно - выходим из приложения
 					if [ $? -eq 1 ] ; then 
  						exit
@@ -186,14 +188,14 @@ function blockChange(){
 		;;
 		"Блок 7")
 			# Прописываем папку для бекапа
-			block="/block7_backup/"
+			unit_path+="/unit7_backup/"
 			case $1 in 
 				"create")
 					dropChange 7 # Если создаем копию, то выбираем станцию
 					;;
 				"restore")
 					# Для восстановления выбираем файл образа из папки
-					backupFile=$(zenity --file-selection --filename="$block" --title="Выберите файл образа")
+					backupFile=$(zenity --file-selection --filename="$unit_path" --title="Выберите файл образа")
 					# Если выбрали "Отмена" или закрыли окно - выходим из приложения
 					if [ $? -eq 1 ] ; then 
  						exit
@@ -206,14 +208,14 @@ function blockChange(){
 		;;
 		"Блок 8")
 			# Прописываем папку для бекапа
-			block="/block8_backup/"
+			unit_path+="/unit8_backup/"
 			case $1 in 
 				"create")
 					dropChange 8 # Если создаем копию, то выбираем станцию
 					;;
 				"restore")
 					# Для восстановления выбираем файл образа из папки
-					backupFile=$(zenity --file-selection --filename="$block" --title="Выберите файл образа")
+					backupFile=$(zenity --file-selection --filename="$unit_path" --title="Выберите файл образа")
 					# Если выбрали "Отмена" или закрыли окно - выходим из приложения
 					if [ $? -eq 1 ] ; then 
  						exit
@@ -232,27 +234,31 @@ function blockChange(){
 
 # Функция выбора диска
 function driveChange(){
-	# Создаем пустой массив дисков
-	drives=()
+	# Меняем разделитель строко в массиве
+	#IFS=$'\n'
+	# Создаем массив для дисков
+	# drives=($(lsblk -Sno NAME,SIZE,VENDOR,TYPE,MODEL))
+	# zenity --info --text=$drives
 	# Делаем запрос дисков в системе
-	store=$(hal-find-by-capability --capability "storage")
-	for s in $store 
-	do
+	# store=$(hal-find-by-capability --capability "storage")
+	#for s in $store 
+	#do
 		# Название диска 
-		product=$(hal-get-property --udi ${s} --key info.product)
+	#	product=$(hal-get-property --udi ${s} --key info.product)
 		# Размер диска
-		size=$(hal-get-property --udi ${s} --key storage.size)
+	#	size=$(hal-get-property --udi ${s} --key storage.size)
 		# Тип диска
-		type=$(hal-get-property --udi ${s} --key storage.drive_type)
+	#	type=$(hal-get-property --udi ${s} --key storage.drive_type)
 		# Где расположен в системе
-		device=$(hal-get-property --udi ${s} --key block.device)
+	#	device=$(hal-get-property --udi ${s} --key block.device)
 		# Точка монтрования диска
-		mountpoint=$(awk -vdev="$device" '$0~dev{print $2}' /etc/mtab)
+	#	mountpoint=$(awk -vdev="$device" '$0~dev{print $2}' /etc/mtab)
 		# Заносим все данные в массив
-		drives+=("${device}" "${product}" "${size}" "${type}" "${mountpoint}")
-	done
+	#	drives+=("${device}" "${product}" "${size}" "${type}" "${mountpoint}")
+	#done
 	# Выводим список дисков
-	drive=$(zenity --list "${drives[@]}" --column="Расположение" --column="Название" --column="Размер" --column="Тип" --column="Точка монтирования" --title="Выберите диск" --width 520 --height 380)
+	drive=$(zenity --list --radiolist --text="Доступные диски" $(lsblk -Sno NAME,SIZE,VENDOR,TYPE,MODEL | awk '{print "FALSE /dev/"$1,$2,$3,$4,$5}') --column=" " --column="Расположение" --column="Размер" --column="Интерфейс" --column="Тип" --column="Модель" --title="Выберите диск" --width 520 --height 380)
+	
 	# Если выбрали "Отмена" или закрыли окно - выходим из приложения
 	if [ $? -eq 1 ] ; then 
  		exit
@@ -260,12 +266,13 @@ function driveChange(){
 	case $1 in
 		"create") # Для создании копии
 			# Вводим пароль
-			password=$(zenity --entry --text="Введите пароль:")
+			password=$(zenity --entry --text="Введите пароль:" --title="Пароль")
 			# Подтверждаем выбор
-			zenity --question --title="Подтвердите выбор" --text="Вы выбрали: $block, станцию $drop, диск $drive, пароль $password"
+			zenity --question --title="Подтвердите выбор" --text="Вы выбрали: $blocks, станцию $drop, диск $drive, пароль $password"
 			if [ $? -eq 0 ] ; then
 				# Создаем образ
-				dd if=${drive} | gzip -c > ${block}${drop}_${date}:${password}.gz
+				(pv -n ${drive} | gzip -c > ${unit_path}${drop}_${date}:${password}.gz) 2>&1 | zenity --title 'Идет резервное копирование диска' --text="Прогресс" --progress --width 380 --height 120 --auto-close --auto-kill 
+				(( $? != 0 )) && zenity --error --text="Ошибка копирования"
 				zenity --info --title="Прогресс" --text="Процесс завершен"
 			else 
 				# Возвращаемся в главное меню
@@ -274,10 +281,11 @@ function driveChange(){
 		;;
 		"restore") # Для восстановления образа
 			# Подтверждаем выбор
-			zenity --question --title="Подтвердите выбор" --text="Вы выбрали: $block, файл $backupFile, диск $drive"
+			zenity --question --title="Подтвердите выбор" --text="Вы выбрали: $blocks, файл $backupFile, диск $drive"
 			if [ $? -eq 0 ] ; then
 				# Распаковываем образ на диск
-				gunzip -c ${backupFile} | dd of=${drive}
+				(pv ${backupFile} | gunzip > ${drive}) 2>&1 | zenity --title 'Идет восстановление диска' --text="Прогресс" --progress --width 380 --height 120 --auto-close --auto-kill 
+				(( $? != 0 )) && zenity --error --text="Ошибка восстановления"
 				zenity --info --title="Прогресс" --text="Процесс завершен"
 			else 
 				# Возвращаемся в главное меню
