@@ -274,6 +274,7 @@ function driveChange(){
 				(pv -n ${drive} | gzip -c > ${unit_path}${drop}_${date}:${password}.gz) 2>&1 | zenity --title 'Идет резервное копирование диска' --text="Прогресс" --progress --width 380 --height 120 --auto-close --auto-kill 
 				(( $? != 0 )) && zenity --error --text="Ошибка копирования"
 				zenity --info --title="Прогресс" --text="Процесс завершен"
+				mainChange
 			else 
 				# Возвращаемся в главное меню
 				mainChange
@@ -287,6 +288,7 @@ function driveChange(){
 				(pv ${backupFile} | gunzip > ${drive}) 2>&1 | zenity --title 'Идет восстановление диска' --text="Прогресс" --progress --width 380 --height 120 --auto-close --auto-kill 
 				(( $? != 0 )) && zenity --error --text="Ошибка восстановления"
 				zenity --info --title="Прогресс" --text="Процесс завершен"
+				mainChange
 			else 
 				# Возвращаемся в главное меню
 				mainChange
